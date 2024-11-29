@@ -1,12 +1,21 @@
 from django.urls import path
-from .views import main, mtransaction, stransactions, balance, sbalance, CustomLoginView
-from django.contrib.auth import views as auth_views
-
+from .views import (
+    MainPageView,
+    ManageTransactionView,
+    SearchTransactionsView,
+    BalanceView,
+    SpecificBalanceView,
+    LogoutView,
+    AnalysisView
+)
+from django.contrib.auth.views import LoginView
 
 urlpatterns = [
-    path('', main, name='main'),
-    path('transaction', mtransaction, name='mtransaction'),
-    path('stransaction', stransactions, name='stransaction'),
-    path('balance', balance, name='balance'),
-    path('balance/<str:account>/<str:currency>', sbalance, name='sbalance'),
+    path('', MainPageView.as_view(), name='main'),
+    path('transaction/', ManageTransactionView.as_view(), name='mtransaction'),
+    path('stransaction/', SearchTransactionsView.as_view(), name='stransaction'),
+    path('balance/', BalanceView.as_view(), name='balance'),
+    path('balance/<str:account>/<str:currency>/', SpecificBalanceView.as_view(), name='sbalance'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('analytics/', AnalysisView.as_view(), name='analytics'),
 ]

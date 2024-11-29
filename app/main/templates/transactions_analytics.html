@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analysis - Category and Timeline</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Navbar -->
+  <nav class="bg-purple-700 text-white p-4 w-full fixed top-0">
+      <div class="flex justify-between items-center max-w-6xl mx-auto px-4">
+          <a href="{% url 'main' %}" class="hover:bg-purple-800 rounded">Home</a>
+          <a href="{% url 'logout' %}" class="hover:bg-purple-800 rounded">Logout</a>
+      </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container mx-auto py-8 px-4 mt-16">
+    <!-- The `mt-16` ensures that the content starts below the fixed navbar -->
+    <h1 class="text-3xl font-bold text-center mb-6">Transactions Analysis</h1>
+
+    <!-- Time Filter -->
+    <form method="GET" class="bg-white rounded-lg shadow-md p-6 mb-6 flex flex-wrap gap-4 justify-between items-center">
+      <div>
+        <label for="time_filter" class="font-semibold text-sm">Time Filter:</label>
+        <select name="time_filter" id="time_filter" class="border rounded-lg p-2">
+          <option value="day" {% if time_filter == 'day' %}selected{% endif %}>Day</option>
+          <option value="month" {% if time_filter == 'month' %}selected{% endif %}>Month</option>
+          <option value="year" {% if time_filter == 'year' %}selected{% endif %}>Year</option>
+        </select>
+      </div>
+      <div>
+        <label for="start_date" class="font-semibold text-sm">Start Date:</label>
+        <input type="date" name="start_date" id="start_date" value="{{ start_date }}" class="border rounded-lg p-2">
+      </div>
+      <div>
+        <label for="end_date" class="font-semibold text-sm">End Date:</label>
+        <input type="date" name="end_date" id="end_date" value="{{ end_date }}" class="border rounded-lg p-2">
+      </div>
+      <div class="flex items-center gap-4">
+        <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">Apply</button>
+        <!-- Clear Filter Button -->
+        <a href="{% url 'analytics' %}" class="bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-400">
+          Clear Filter
+        </a>
+      </div>
+    </form>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Timeline Chart -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-center">Transactions Timeline</h2>
+        <canvas id="timelineChart" class="mt-4"></canvas>
+      </div>
+
+      <!-- Category Chart -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-center">Category Breakdown</h2>
+        <canvas id="categoryChart" class="mt-4"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Embed Chart Data -->
+  <script id="timeline-chart-data" type="application/json">
+    {{ timeline_chart_data|safe }}
+  </script>
+  <script id="category-chart-data" type="application/json">
+    {{ category_chart_data|safe }}
+  </script>
+
+  <script>
+    // Timeline Chart
+    const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+    const timelineChartData = JSON.parse(document.getElementById('timeline-chart-data').textContent);
+
+    new Chart(timelineCtx, {
+      type: 'line',
+      data: timelineChartData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+        },
+      },
+    });
+
+    // Category Breakdown Chart
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    const categoryChartData = JSON.parse(document.getElementById('category-chart-data').textContent);
+
+    new Chart(categoryCtx, {
+      type: 'pie', // You can also use 'doughnut'
+      data: categoryChartData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+        },
+      },
+    });
+  </script>
+</body>
+</html>

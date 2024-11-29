@@ -79,64 +79,67 @@
             </div>
         </form>
 
-        <table class="min-w-full bg-white rounded shadow-md">
-            <thead class="bg-purple-700 text-white">
-                <tr>
-                    <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID</th>
-                    {% if form_values.date_value %}
-                        <th class="py-3 px-4 uppercase font-semibold text-sm">Date</th>
-                    {% endif %}
-                    {% if form_values.name_value %}
-                        <th class="py-3 px-4 uppercase font-semibold text-sm">Name</th>
-                    {% endif %}
-                    {% if form_values.type_value %}
-                        <th class="py-3 px-4 uppercase font-semibold text-sm">Type</th>
-                    {% endif %}
-                    {% if form_values.account_value %}
-                        <th class="py-3 px-4 uppercase font-semibold text-sm">Account</th>
-                    {% endif %}
-                    {% if form_values.amount_value %}
-                        <th class="py-3 px-4 uppercase font-semibold text-sm">Amount</th>
-                    {% endif %}
-                    {% if form_values.category_value %}
-                        <th class="py-3 px-4 uppercase font-semibold text-sm">Category</th>
-                    {% endif %}
-                    {% if form_values.description_value %}
-                        <th class="py-3 px-4 uppercase font-semibold text-sm">Description</th>
-                    {% endif %}
-                        <th class="py-3 px-4 uppercase font-semibold text-sm">Current Value</th>
-            </tr>
-          </thead>
-            <tbody class="text-gray-700">
-                {% for dato in table %}
+        <!-- Scrollable Table -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded shadow-md">
+                <thead class="bg-purple-700 text-white">
                     <tr>
-                        <td class="py-3 px-4 text-center">{{ dato.id }}</td>
+                        <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID</th>
                         {% if form_values.date_value %}
-                          <td class="py-3 px-4 text-center">{{ dato.date|date:"d/m/Y" }}</td>
+                            <th class="py-3 px-4 uppercase font-semibold text-sm">Date</th>
                         {% endif %}
                         {% if form_values.name_value %}
-                          <td class="py-3 px-4 text-center">{{ dato.name }}</td>
+                            <th class="py-3 px-4 uppercase font-semibold text-sm">Name</th>
                         {% endif %}
                         {% if form_values.type_value %}
-                          <td class="py-3 px-4 text-center">{{ dato.type }}</td>
+                            <th class="py-3 px-4 uppercase font-semibold text-sm">Type</th>
                         {% endif %}
                         {% if form_values.account_value %}
-                          <td class="py-3 px-4 text-center">{{ dato.account.name }}</td>
+                            <th class="py-3 px-4 uppercase font-semibold text-sm">Account</th>
                         {% endif %}
                         {% if form_values.amount_value %}
-                          <td class="py-3 px-4 text-center">{{ dato.amount }}</td>
+                            <th class="py-3 px-4 uppercase font-semibold text-sm">Amount</th>
                         {% endif %}
                         {% if form_values.category_value %}
-                          <td class="py-3 px-4 text-center">{{ dato.category }}</td>
+                            <th class="py-3 px-4 uppercase font-semibold text-sm">Category</th>
                         {% endif %}
                         {% if form_values.description_value %}
-                          <td class="py-3 px-4 text-center">{{ dato.description }}</td>
+                            <th class="py-3 px-4 uppercase font-semibold text-sm">Description</th>
                         {% endif %}
-                        <td class="py-3 px-4 text-center">{{ dato.current_amount }}</td>
+                            <th class="py-3 px-4 uppercase font-semibold text-sm">Current Value</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="text-gray-700">
+                    {% for dato in table %}
+                        <tr>
+                            <td class="py-3 px-4 text-center">{{ dato.id }}</td>
+                            {% if form_values.date_value %}
+                              <td class="py-3 px-4 text-center">{{ dato.date|date:"d/m/Y" }}</td>
+                            {% endif %}
+                            {% if form_values.name_value %}
+                              <td class="py-3 px-4 text-center">{{ dato.name }}</td>
+                            {% endif %}
+                            {% if form_values.type_value %}
+                              <td class="py-3 px-4 text-center">{{ dato.type }}</td>
+                            {% endif %}
+                            {% if form_values.account_value %}
+                              <td class="py-3 px-4 text-center">{{ dato.account.name }}</td>
+                            {% endif %}
+                            {% if form_values.amount_value %}
+                              <td class="py-3 px-4 text-center">{{ dato.amount }}</td>
+                            {% endif %}
+                            {% if form_values.category_value %}
+                              <td class="py-3 px-4 text-center">{{ dato.category }}</td>
+                            {% endif %}
+                            {% if form_values.description_value %}
+                              <td class="py-3 px-4 text-center">{{ dato.description }}</td>
+                            {% endif %}
+                            <td class="py-3 px-4 text-center">{{ dato.current_amount }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
