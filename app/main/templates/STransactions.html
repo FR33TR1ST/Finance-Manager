@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Records</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 4rem; /* Add padding to account for fixed navbar */
+      }
+      .navbar {
+        background-color: #6B46C1; /* Purple color */
+      }
+      .navbar a {
+        color: white;
+        padding: 8px 16px;
+        display: inline-block;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+      .navbar a:hover {
+        background-color: #553C9A; /* Darker purple color */
+      }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <nav class="bg-purple-700 text-white p-4 w-full fixed top-0">
+      <div class="flex justify-between items-center max-w-6xl mx-auto px-4">
+          <a href="{% url 'main' %}" class="hover:bg-purple-800 rounded">Home</a>
+          <a href="{% url 'logout' %}" class="hover:bg-purple-800 rounded">Logout</a>
+      </div>
+    </nav>
+    <div class="container mx-auto mt-8">
+        <form method="post" class="bg-white p-6 rounded shadow-md mb-6">
+            {% csrf_token %}
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-1/2 px-2 mb-4">
+                    <label class="flex items-center space-x-2">
+                        {{ form.date_value }}<span>Date</span>
+                    </label>
+                </div>
+                <div class="w-1/2 px-2 mb-4">
+                    <label class="flex items-center space-x-2">
+                        {{ form.name_value }}<span>Name</span>
+                    </label>
+                </div>
+                <div class="w-1/2 px-2 mb-4">
+                    <label class="flex items-center space-x-2">
+                        {{ form.type_value }}<span>Type</span>
+                    </label>
+                </div>
+                <div class="w-1/2 px-2 mb-4">
+                    <label class="flex items-center space-x-2">
+                        {{ form.account_value }}<span>Account</span>
+                    </label>
+                </div>
+                <div class="w-1/2 px-2 mb-4">
+                    <label class="flex items-center space-x-2">
+                        {{ form.amount_value }}<span>Amount</span>
+                    </label>
+                </div>
+                <div class="w-1/2 px-2 mb-4">
+                    <label class="flex items-center space-x-2">
+                        {{ form.category_value }}<span>Category</span>
+                    </label>
+                </div>
+                <div class="w-1/2 px-2 mb-4">
+                    <label class="flex items-center space-x-2">
+                        {{ form.description_value }}<span>Description</span>
+                    </label>
+                </div>
+                <button type="submit" class="bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Enviar
+                </button>
+            </div>
+        </form>
+
+        <table class="min-w-full bg-white rounded shadow-md">
+            <thead class="bg-purple-700 text-white">
+                <tr>
+                    <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID</th>
+                    {% if form_values.date_value %}
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Date</th>
+                    {% endif %}
+                    {% if form_values.name_value %}
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                    {% endif %}
+                    {% if form_values.type_value %}
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Type</th>
+                    {% endif %}
+                    {% if form_values.account_value %}
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Account</th>
+                    {% endif %}
+                    {% if form_values.amount_value %}
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Amount</th>
+                    {% endif %}
+                    {% if form_values.category_value %}
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Category</th>
+                    {% endif %}
+                    {% if form_values.description_value %}
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Description</th>
+                    {% endif %}
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Current Value</th>
+            </tr>
+          </thead>
+            <tbody class="text-gray-700">
+                {% for dato in table %}
+                    <tr>
+                        <td class="py-3 px-4 text-center">{{ dato.id }}</td>
+                        {% if form_values.date_value %}
+                          <td class="py-3 px-4 text-center">{{ dato.date|date:"d/m/Y" }}</td>
+                        {% endif %}
+                        {% if form_values.name_value %}
+                          <td class="py-3 px-4 text-center">{{ dato.name }}</td>
+                        {% endif %}
+                        {% if form_values.type_value %}
+                          <td class="py-3 px-4 text-center">{{ dato.type }}</td>
+                        {% endif %}
+                        {% if form_values.account_value %}
+                          <td class="py-3 px-4 text-center">{{ dato.account.name }}</td>
+                        {% endif %}
+                        {% if form_values.amount_value %}
+                          <td class="py-3 px-4 text-center">{{ dato.amount }}</td>
+                        {% endif %}
+                        {% if form_values.category_value %}
+                          <td class="py-3 px-4 text-center">{{ dato.category }}</td>
+                        {% endif %}
+                        {% if form_values.description_value %}
+                          <td class="py-3 px-4 text-center">{{ dato.description }}</td>
+                        {% endif %}
+                        <td class="py-3 px-4 text-center">{{ dato.current_amount }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

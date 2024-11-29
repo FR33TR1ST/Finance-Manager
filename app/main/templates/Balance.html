@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      /* Additional styles to adjust the margin-top */
+      .content-container {
+        margin-top: 4rem; /* Adjust the value based on the height of your navbar */
+      }
+      /* Ensure that the navbar height is accounted for in the overall page layout */
+      body {
+        padding-top: 4rem; /* Same as the margin-top value */
+      }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center min-h-screen pt-16">
+    <nav class="bg-purple-700 text-white p-4 w-full fixed top-0 z-10">
+      <div class="flex justify-between items-center max-w-6xl mx-auto px-4">
+          <a href="{% url 'main' %}" class="hover:bg-purple-800 rounded">Home</a>
+          <a href="{% url 'logout' %}" class="hover:bg-purple-800 rounded">Logout</a>
+      </div>
+    </nav>
+    <div class="container mx-auto p-6 grid md:grid-cols-2 gap-4 content-container">
+        {% for account in accounts %}
+            <a href="{% url 'sbalance' account.name account.currency %}" class="block">
+                <div class="bg-white p-4 rounded shadow-md hover:shadow-lg transition-shadow duration-200">
+                    <ul class="list-disc list-inside">
+                        <li class="font-bold text-lg text-purple-700">{{ account.name }}</li>
+                        <li>{{ account.type }}</li>
+                        <li>{{ account.currency }}</li>
+                        <li class="font-semibold">{{ account.balance }}</li>
+                    </ul>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</body>
+</html>
