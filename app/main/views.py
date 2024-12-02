@@ -13,28 +13,43 @@ import json
 from datetime import datetime
 
 
-class CustomLoginView(LoginView):
-    template_name = 'login.html'
-    fields = '__all__'
-    redirect_authenticated_user = True
-
-    def get_success_url(self):
-        return reverse_lazy('main')
-
-
 class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
         return redirect('login')
 
 
-class MainPageView(LoginRequiredMixin, TemplateView):
-    template_name = 'main_page.html'
+class CustomLoginOrMainView(TemplateView):
+    template_name_login = 'login.html'
+    template_name_main = 'main_page.html'
+    redirect_authenticated_user = True
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['username'] = self.request.user.first_name
-        return context
+    def dispatch(self, request, *args, **kwargs):
+        # Check if the user is authenticated
+        if request.user.is_authenticated:
+            return self.main_page(request, *args, **kwargs)
+        else:
+            return self.login_page(request, *args, **kwargs)
+
+    def login_page(self, request, *args, **kwargs):
+        # Render the login view
+        if request.method == 'POST':
+            login_view = LoginView.as_view(
+                template_name=self.template_name_login,
+                redirect_authenticated_user=self.redirect_authenticated_user,
+                success_url=reverse_lazy('main')
+            )
+            return login_view(request, *args, **kwargs)
+        return self.render_to_response({'template_name': self.template_name_login})
+
+    def main_page(self, request, *args, **kwargs):
+        # Render the main page view
+        context = {'username': request.user.first_name}
+        return self.render_to_response(context)
+
+    def get_template_names(self):
+        # Dynamically choose the template based on authentication status
+        return [self.template_name_main if self.request.user.is_authenticated else self.template_name_login]
 
 
 class ManageTransactionView(LoginRequiredMixin, FormView):
@@ -113,7 +128,7 @@ class SpecificBalanceView(LoginRequiredMixin, FormView):
         return context
 
 
-class AnalysisView(View):
+class AnalysisView(LoginRequiredMixin, View):
     template_name = 'transactions_analytics.html'
 
     def get(self, request, *args, **kwargs):

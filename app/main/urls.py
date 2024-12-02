@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    MainPageView,
+    CustomLoginOrMainView,
     ManageTransactionView,
     SearchTransactionsView,
     BalanceView,
@@ -11,7 +11,7 @@ from .views import (
 from django.contrib.auth.views import LoginView
 
 urlpatterns = [
-    path('', MainPageView.as_view(), name='main'),
+    path('', CustomLoginOrMainView.as_view(), name='main'),
     path('transaction/', ManageTransactionView.as_view(), name='mtransaction'),
     path('stransaction/', SearchTransactionsView.as_view(), name='stransaction'),
     path('balance/', BalanceView.as_view(), name='balance'),
