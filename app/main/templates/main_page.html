@@ -39,6 +39,13 @@
           Go to <i class="fas fa-chevron-right"></i>
         </a>
       </div>
+      <div class="bg-purple-700 text-white p-6 sm:p-8 rounded-xl shadow-lg">
+        <h2 class="font-bold text-xl sm:text-2xl">Add a Wallet</h2>
+        <p class="mt-4 text-sm sm:text-lg"><i class="fas fa-wallet mr-2"></i>Add a wallet</p>
+        <a href="{% url 'create_account' %}" class="mt-6 inline-block bg-purple-800 hover:bg-purple-600 text-sm sm:text-lg font-semibold rounded-full px-6 py-2 transition duration-150 ease-in-out">
+          Go to <i class="fas fa-chevron-right"></i>
+        </a>
+      </div>
 
       <!-- Show Transaction -->
       <div class="bg-purple-700 text-white p-6 sm:p-8 rounded-xl shadow-lg">
@@ -52,7 +59,7 @@
       <!-- Balance -->
       <div class="bg-purple-700 text-white p-6 sm:p-8 rounded-xl shadow-lg">
         <h2 class="font-bold text-xl sm:text-2xl">Balance</h2>
-        <p class="mt-4 text-sm sm:text-lg"><i class="fas fa-wallet mr-2"></i>Check your balance</p>
+        <p class="mt-4 text-sm sm:text-lg"><i class="fas fa-dollar-sign mr-2"></i>Check your balance</p>
         <a href="{% url 'balance' %}" class="mt-6 inline-block bg-purple-800 hover:bg-purple-600 text-sm sm:text-lg font-semibold rounded-full px-6 py-2 transition duration-150 ease-in-out">
           Go to <i class="fas fa-chevron-right"></i>
         </a>
@@ -75,14 +82,14 @@
       <!-- Exchange Rate Widgets -->
       <div class="flex flex-wrap gap-4">
         <div class="bg-purple-600 text-white p-4 rounded-lg shadow-md">
-          <h3 class="font-semibold text-lg">ARS to USD</h3>
-          <p class="text-sm">Buy: $<span id="buyRate">0.00</span></p>
-          <p class="text-sm">Sell: $<span id="sellRate">0.00</span></p>
+          <h3 class="font-semibold text-lg">Dolar Tarjeta</h3>
+          <p class="text-sm">Buy: $<span id="buyRate">{{ tarjeta_compra }}</span></p>
+          <p class="text-sm">Sell: $<span id="sellRate">{{ tarjeta_venta }}</span></p>
         </div>
         <div class="bg-purple-600 text-white p-4 rounded-lg shadow-md">
-          <h3 class="font-semibold text-lg">USD to ARS</h3>
-          <p class="text-sm">Buy: <span id="buy-rate-usd">-</span></p>
-          <p class="text-sm">Sell: <span id="sell-rate-usd">-</span></p>
+          <h3 class="font-semibold text-lg">Dolar Blue</h3>
+          <p class="text-sm">Buy: $<span id="buy-rate-usd">{{ blue_compra }}</span></p>
+          <p class="text-sm">Sell: $<span id="sell-rate-usd">{{ blue_venta }}</span></p>
         </div>
       </div>
 

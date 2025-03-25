@@ -6,7 +6,8 @@ from .views import (
     BalanceView,
     SpecificBalanceView,
     LogoutView,
-    AnalysisView
+    AnalysisView,
+    CreateAccountView
 )
 from django.contrib.auth.views import LoginView
 
@@ -18,4 +19,5 @@ urlpatterns = [
     path('balance/<str:account>/<str:currency>/', SpecificBalanceView.as_view(), name='sbalance'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('analytics/', AnalysisView.as_view(), name='analytics'),
+    path('account/', CreateAccountView.as_view(), name='create_account'),
 ]

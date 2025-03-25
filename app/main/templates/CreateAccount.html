@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Wallet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+      .navbar {
+        background-color: #6B46C1; /* This is a purple color */
+      }
+
+      .navbar a {
+        text-decoration: none;
+        color: white;
+        padding: 12px 24px; /* Increased padding */
+        display: inline-block;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        margin: -8px -16px; /* Negative margin to counteract the increased padding */
+      }
+
+      .navbar a:hover {
+        background-color: #553C9A; /* This is a darker purple color */
+      }
+    </style>
+
+
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col justify-center items-center min-h-screen">
+    <nav class="bg-purple-700 text-white p-4 w-full fixed top-0">
+      <div class="flex justify-between items-center max-w-6xl mx-auto px-4">
+          <a href="{% url 'main' %}" class="hover:bg-purple-800 rounded">Home</a>
+          <a href="{% url 'logout' %}" class="hover:bg-purple-800 rounded">Logout</a>
+      </div>
+    </nav>
+
+    <div class="w-full flex justify-center">
+        <form method="post" class="bg-white p-6 rounded shadow-md w-full max-w-md">
+            {% csrf_token %}
+            <!-- Repeat for each form field -->
+            <div class="mb-4">
+                <label for="id_name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                {{ form.name|add_class:"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+            </div>
+            <div class="mb-4">
+            <label for="id_type" class="block text-gray-700 text-sm font-bold mb-2">Type:</label>
+                {{ form.type|add_class:"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+            </div>
+            <div class="mb-4">
+            <label for="id_currency" class="block text-gray-700 text-sm font-bold mb-2">Currency:</label>
+                {{ form.currency|add_class:"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+            </div>
+            <div class="mb-4">
+            <label for="id_balance" class="block text-gray-700 text-sm font-bold mb-2">Balance:</label>
+                {{ form.balance|add_class:"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" }}
+            </div>
+            <button type="submit" class="bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+                Enviar
+            </button>
+        </form>
+    </div>
+</body>
+</html>

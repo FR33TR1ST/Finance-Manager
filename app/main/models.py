@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Transaction(models.Model):
@@ -11,6 +12,7 @@ class Transaction(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE)   # Food, Rent, etc.
     current_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     description = models.CharField(max_length=256)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -22,6 +24,7 @@ class Account(models.Model):
     type = models.CharField(max_length=100)     # Checking, Savings, Credit Card, etc.
     currency = models.CharField(max_length=3)
     balance = models.DecimalField(max_digits=15, decimal_places=2)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.name},{self.currency}, {self.balance}"
